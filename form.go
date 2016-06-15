@@ -87,7 +87,7 @@ func (f *Form) Append(label string, child Control, stretchy bool) {
 // Delete deletes the nth control of the Form.
 func (f *Form) Delete(n int) {
 	f.children = append(f.children[:n], f.children[n + 1:]...)
-	//C.uiFormDelete(f.f, C.int(n))
+	C.uiFormDelete(f.f, C.int(n))
 }
 
 // TODO: InsertAt
