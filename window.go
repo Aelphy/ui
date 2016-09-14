@@ -22,12 +22,12 @@ var windows = make(map[*C.uiWindow]*Window)
 // entirety of the window. Though a Window is a Control,
 // a Window cannot be the child of another Control.
 type Window struct {
-	c	*C.uiControl
-	w	*C.uiWindow
+	c *C.uiControl
+	w *C.uiWindow
 
-	child		Control
+	child Control
 
-	onClosing		func(w *Window) bool
+	onClosing func(w *Window) bool
 }
 
 // NewWindow creates a new Window.
@@ -156,4 +156,16 @@ func (w *Window) Margined() bool {
 // best practices.
 func (w *Window) SetMargined(margined bool) {
 	C.uiWindowSetMargined(w.w, frombool(margined))
+}
+
+// SetContentSize change the window content size.
+func (w *Window) SetContentSize(width, height int) {
+	C.uiWindowSetContentSize(w.w, C.int(width), C.int(height))
+}
+
+// GetContentSize change the window content size.
+func (w *Window) GetContentSize() (width, height int) {
+	cWidth, cHeight := C.int(0), C.int(0)
+	C.uiWindowContentSize(w.w, &cWidth, &cHeight)
+	return int(cWidth), int(cHeight)
 }
